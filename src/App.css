@@ -1,38 +1,74 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: linear-gradient(-45deg, #000, #222, #000, #222, #000);
+  background-size: 400% 400%; /* Aumenta o tamanho do degradê para criar ondas mais frequentes */
+  animation: wave 4s infinite alternate; /* Aplica a animação com maior frequência */
 }
 
-.App-link {
-  color: #61dafb;
+@keyframes wave {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#calculator {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 5px;
+  width: 300px;
+  padding: 10px;
+  border-radius: 15px;
 }
+
+button {
+  padding: 20px;
+  font-size: 20px;
+  color: #fff;
+  background-color: #333;
+  border: none;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #666;
+}
+
+button#clear {
+  background-color: #808080;
+}
+
+button#zero {
+  grid-column: span 3; /* Faz o botão do zero ocupar três colunas */
+}
+
+button#equals {
+  grid-row: span 2; /* Faz o botão de igual ocupar duas linhas */
+  background-color: #ff9500; /* Aplica a mesma cor dos operadores */
+}
+
+#display {
+  grid-column: span 4;
+  padding: 15px;
+  background-color: #333;
+  text-align: right;
+  font-size: 40px;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+}
+
+/* Estiliza os botões dos operadores */
+button#divide, button#multiply, button#subtract, button#add, button#decimal {
+  background-color: #ff9500;
+}
+
