@@ -9,25 +9,15 @@ function App() {
   };
 
   const handleNumberClick = (number) => {
-    setDisplay((prevDisplay) => {
-      // Se o número atual for zero, substitua-o pelo número clicado
-      if (prevDisplay === '0') {
-        return number;
-      } else {
-        // Caso contrário, concatene o número clicado ao número atual
-        return prevDisplay + number;
-      }
-    });
+    setDisplay((prevDisplay) => (prevDisplay === '0' ? number : prevDisplay + number));
   };
 
   const handleOperatorClick = (operator) => {
     setDisplay((prevDisplay) => {
-      // Verifica se o último caractere é um operador, se for, substitua pelo novo operador
       const lastCharacter = prevDisplay.slice(-1);
-      if (lastCharacter === '+' || lastCharacter === '-' || lastCharacter === '*' || lastCharacter === '/') {
+      if (['+', '-', '*', '/'].includes(lastCharacter)) {
         return prevDisplay.slice(0, -1) + operator;
       } else {
-        // Caso contrário, concatene o operador ao display atual
         return prevDisplay + operator;
       }
     });
@@ -35,8 +25,8 @@ function App() {
 
   const handleDecimalClick = () => {
     setDisplay((prevDisplay) => {
-      // Verifica se o display atual já contém um ponto decimal
-      if (!prevDisplay.includes('.')) {
+      const lastNumber = prevDisplay.split(/[\+\-\*\/]/).pop();
+      if (!lastNumber.includes('.')) {
         return prevDisplay + '.';
       } else {
         return prevDisplay;
@@ -47,13 +37,9 @@ function App() {
   const handleEqualClick = () => {
     setDisplay((prevDisplay) => {
       try {
-        // Avalia a expressão matemática no display e retorna o resultado
-        // Utilizamos o eval() aqui por simplicidade, mas em um cenário real, seria importante sanitizar a entrada
-        const result = eval(prevDisplay);
-        return result.toString();
-      } catch (error) {
-        // Em caso de erro (por exemplo, expressão inválida), mantenha o display como está
-        console.error('Erro ao calcular', error);
+        const result = eval(prevDisplay.replace(/--/g, '+'));
+        return parseFloat(result.toFixed(4)).toString();
+      } catch {
         return prevDisplay;
       }
     });
